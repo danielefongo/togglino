@@ -11,6 +11,21 @@ Enable google apps script [here](https://script.google.com/home/usersettings)
 
 ```
 source .env
+echo "{\"scriptId\":\"${GOOGLE_SCRIPT_ID}\"}" > sheets/.clasp.json
+```
+
+### Deploy
+
+```
+source .env
 cd sheets
-clasp clone $GOOGLE_SCRIPT_ID
+clasp push
+clasp deploy -i $GOOGLE_API_ID
+```
+
+### Test
+
+```
+source .env
+curl -L --insecure https://script.google.com/macros/s/$GOOGLE_API_ID/exec
 ```

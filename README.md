@@ -17,10 +17,7 @@ echo "{\"scriptId\":\"${GOOGLE_SCRIPT_ID}\"}" > sheets/.clasp.json
 ### Deploy
 
 ```
-source .env
-cd sheets
-clasp push
-clasp deploy -i $GOOGLE_API_ID
+./publish.sh
 ```
 
 ### Test

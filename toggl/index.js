@@ -15,21 +15,25 @@ async function doAll() {
         let updatedValues = projects
         .filter(project => projectIds.includes(project.id))
         .map(project => sheetProject(project))
+        .sort((project1, project2) => project1.id - project2.id)
 
         postProjects(updatedValues)
     });
 }
 
 function sheetProject(project) {
-    actual_hours = project.actual_hours
-    if(actual_hours == undefined)
-        actual_hours = 0
-    
     return {
         id: project.id,
         name: project.name,
-        days: Math.floor(actual_hours / 8)
+        days: getDaysFrom(project.actual_hours),
+        estimated_days: getDaysFrom(project.estimated_hours)
      }
+}
+
+function getDaysFrom(hours) {
+    if(hours == undefined)
+        hours = 0
+    return hours / 8
 }
 
 async function getProjectIds() {

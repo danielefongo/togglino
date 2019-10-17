@@ -8,6 +8,6 @@ const clientId = process.env.TOGGL_CLIENT_ID
 toggl.getWorkspaceProjects(workSpaceId, (err, workSpaces) => {
    let clientProjects = workSpaces.filter((project) => project.cid == clientId)
     for (const project of clientProjects) {
-        console.log(project.id+", "+project.name)
+        console.log(project)
     }
 });

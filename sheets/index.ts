@@ -10,10 +10,10 @@ function doPost(e) {
 
     for(let i = 0; i < projects.length; i++) {
         getCell(sheet, "A", i).setValue(projects[i].id)
-        getCell(sheet, "E", i).setValue(projects[i].name)
-        getCell(sheet, "F", i).setValue(projects[i].days)
-        getCell(sheet, "G", i).setValue(projects[i].estimated_days)
-        
+        getCell(sheet, "F", i).setValue(projects[i].name)
+        getCell(sheet, "G", i).setValue(projects[i].days)
+        getCell(sheet, "H", i).setValue(projects[i].estimated_days)
+
         projects[i].insertedValues.forEach(keyValue => {
             getCell(sheet, keyValue.key, i).setValue(keyValue.value)
         })
@@ -29,7 +29,7 @@ function doGet() {
 
         if(id == "") break;
 
-        let insertedColumns = ["B", "C", "D", "Q"]
+        let insertedColumns = ["B", "C", "D", "E", "R"]
         let insertedValues = insertedColumns.map(key => {
             return { 
                 key: key,

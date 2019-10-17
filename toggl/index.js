@@ -25,10 +25,11 @@ function sheetProject(project) {
     if(actual_hours == undefined)
         actual_hours = 0
     
-        return {
-        name: project.id,
+    return {
+        id: project.id,
+        name: project.name,
         hours: actual_hours
-    }
+     }
 }
 
 async function getProjectIds() {

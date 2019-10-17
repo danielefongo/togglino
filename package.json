@@ -16,6 +16,8 @@
   "author": "Daniele Fongo",
   "license": "ISC",
   "dependencies": {
-    "@types/google-apps-script": "0.0.62"
+    "@types/google-apps-script": "0.0.62",
+    "dotenv": "^8.2.0",
+    "toggl-api": "^1.0.1"
   }
 }

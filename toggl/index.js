@@ -28,7 +28,7 @@ function sheetProject(project) {
     return {
         id: project.id,
         name: project.name,
-        hours: actual_hours
+        days: Math.floor(actual_hours / 8)
      }
 }
 

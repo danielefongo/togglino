@@ -9,34 +9,43 @@ let googleApi = "https://script.google.com/macros/s/" + process.env.GOOGLE_API_I
 doAll()
 
 async function doAll() {
-    let projectIds = await getProjectIds()
+    let sheetProjects = await getProjectFromSheet()
+    let projectsIds = sheetProjects.map(project => project.id)
 
-    toggl.getWorkspaceProjects(workSpaceId, (err, projects) => {
-        let updatedValues = projects
-        .filter(project => projectIds.includes(project.id))
-        .map(project => sheetProject(project))
+    toggl.getWorkspaceProjects(workSpaceId, (err, togglProjects) => {
+        let updatedValues = togglProjects.filter(togglProject => projectsIds.includes(togglProject.id))
+        .map(togglProject => toSheetProject(togglProject, getSheetProjectFrom(sheetProjects, togglProject.id)))
         .sort((project1, project2) => project1.id - project2.id)
 
         postProjects(updatedValues)
     });
 }
 
-function sheetProject(project) {
+function getSheetProjectFrom(sheetProjects, id) {
+    return sheetProjects.filter(project => project.id == id)[0]
+}
+
+function toSheetProject(togglProject, sheetProject) {
     return {
-        id: project.id,
-        name: project.name,
-        days: getDaysFrom(project.actual_hours),
-        estimated_days: getDaysFrom(project.estimated_hours)
+        id: togglProject.id,
+        name: togglProject.name,
+        days: getDaysFrom(togglProject.actual_hours),
+        estimated_days: getDaysFrom(togglProject.estimated_hours),
+        insertedValues: sheetProject.insertedValues
      }
 }
 
 function getDaysFrom(hours) {
-    if(hours == undefined)
-        hours = 0
-    return hours / 8
+    return valueOrZero(hours) / 8
 }
 
-async function getProjectIds() {
+function valueOrZero(data) {
+    if(data == undefined)
+        return 0
+    return data
+}
+
+async function getProjectFromSheet() {
     return await axios.get(googleApi).then(response => {
         return response.data;
     }).catch(console.log);

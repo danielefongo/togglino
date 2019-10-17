@@ -1,15 +1,31 @@
 function doPost(e) {
     let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    sheet.appendRow(["Hello", "world", "!"]);
+
+    let rawData = e.postData.contents;
+    let projects: Projects = JSON.parse(rawData);
+
+    for(let i = 0; i < projects.length; i++) {
+        sheet.getRange(i + 1, 1).setValue(projects[i].name)
+        sheet.getRange(i + 1, 2).setValue(projects[i].hours)
+    }
 }
 
 function doGet() {
     let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     let data = sheet.getDataRange().getValues();
-    let collector = ""
-    for (var i = 0; i < data.length; i++) {
-        collector += data[i] + "\n"
+    let collector = []
+    for (let i = 0; i < data.length; i++) {
+        let name = sheet.getRange(i + 1, 1).getValue()
+        collector.push(name)
     }
 
-    return ContentService.createTextOutput(collector);
+    return ContentService.createTextOutput(JSON.stringify(collector));
 }
+
+interface Project
+{
+    name: string;
+    hours: number;
+}
+
+type Projects = Project[];

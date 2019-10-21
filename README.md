@@ -14,8 +14,8 @@ source .env
 echo "{\"scriptId\":\"${GOOGLE_SCRIPT_ID}\"}" > sheets/.clasp.json
 ```
 
-### Deploy
-
+### Deploy
+ 
 ```
 ./publish.sh
 ```

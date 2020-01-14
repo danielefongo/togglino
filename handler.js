@@ -1,23 +1,19 @@
 'use strict';
 
+require('dotenv').config()
 var doAll = require("./toggl/doAll")
 
 module.exports.getTogglData = async event => {
   try {
     console.log("ready to start")
-    await doAll()  
+    await doAll()
     console.log("finished")
 
     return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          message: 'Function executed successfully',
-          input: event,
-        },
-        null,
-        2
-      ),
+      statusCode: 301,
+      headers: {
+        Location: 'https://docs.google.com/spreadsheets/d/' + process.env.GOOGLE_SHEET_ID,
+      }
     };
   } catch (error) {
     return {
@@ -32,9 +28,4 @@ module.exports.getTogglData = async event => {
       ),
     };
   }
-  
-  
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 };

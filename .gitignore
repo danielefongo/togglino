@@ -1,3 +1,4 @@
 node_modules
 .env
 .clasp.json
+.serverless

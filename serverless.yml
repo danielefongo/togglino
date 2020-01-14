@@ -1,0 +1,15 @@
+service: togglino
+
+provider:
+  name: aws
+  region: eu-west-1
+  memorySize: 128
+  runtime: nodejs12.x
+
+functions:
+  getTogglData:
+    handler: handler.getTogglData
+    events:
+      - http:
+          method: get
+          path: /getTogglData

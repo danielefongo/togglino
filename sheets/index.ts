@@ -18,6 +18,7 @@ function doPost(e) {
             getCell(sheet, keyValue.key, i).setValue(keyValue.value)
         })
     }
+    setLastUpdateTime(sheet, new Date())
 }
 
 function doGet() {
@@ -41,6 +42,10 @@ function doGet() {
     }
 
     return ContentService.createTextOutput(JSON.stringify(collector));
+}
+
+function setLastUpdateTime(sheet, updateDate){
+    sheet.getRange("A5:A5").setNote((Utilities.formatDate(updateDate, "GMT+1", "yyyy-MM-dd HH:mm:ss ")))
 }
 
 function valueOrZero(data) {
